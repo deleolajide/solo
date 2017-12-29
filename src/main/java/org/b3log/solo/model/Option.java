@@ -373,12 +373,12 @@ public final class Option {
         /**
          * Default blog title.
          */
-        public static final String DEFAULT_BLOG_TITLE = "Solo 示例";
+        public static final String DEFAULT_BLOG_TITLE = "Openfire Blogs";
 
         /**
          * Default blog subtitle.
          */
-        public static final String DEFAULT_BLOG_SUBTITLE = "Java 开源博客";
+        public static final String DEFAULT_BLOG_SUBTITLE = "Fastpath and OfMeet enabled";
 
         /**
          * Default skin directory name.
@@ -388,14 +388,14 @@ public final class Option {
         /**
          * Default language.
          */
-        public static final String DEFAULT_LANGUAGE = "zh_CN";
+        public static final String DEFAULT_LANGUAGE = "en_US";
 
         /**
          * Default time zone.
          *
          * @see java.util.TimeZone#getAvailableIDs()
          */
-        public static final String DEFAULT_TIME_ZONE = "Asia/Shanghai";
+        public static final String DEFAULT_TIME_ZONE = "Europe/London";
 
         /**
          * Default enable article update hint.
@@ -405,17 +405,17 @@ public final class Option {
         /**
          * Default notice board.
          */
-        public static final String DEFAULT_NOTICE_BOARD = "Open Source, Open Mind, <br/>Open Sight, Open Future!";
+        public static final String DEFAULT_NOTICE_BOARD = "Openfire Blogs";
 
         /**
          * Default meta keywords..
          */
-        public static final String DEFAULT_META_KEYWORDS = "Solo,Java 博客,开源";
+        public static final String DEFAULT_META_KEYWORDS = "";
 
         /**
          * Default meta description..
          */
-        public static final String DEFAULT_META_DESCRIPTION = "An open source blog with Java. Java 开源博客";
+        public static final String DEFAULT_META_DESCRIPTION = "An open source blog with Openfire";
 
         /**
          * Default HTML head to append.

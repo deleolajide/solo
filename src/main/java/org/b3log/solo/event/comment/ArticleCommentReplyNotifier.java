@@ -37,6 +37,7 @@ import org.b3log.solo.repository.impl.CommentRepositoryImpl;
 import org.b3log.solo.service.PreferenceQueryService;
 import org.b3log.solo.util.Mails;
 import org.json.JSONObject;
+import org.jivesoftware.util.EmailService;
 
 /**
  * This listener is responsible for processing article comment reply.
@@ -154,7 +155,8 @@ public final class ArticleCommentReplyNotifier extends AbstractEventListener<JSO
             LOGGER.log(Level.DEBUG, "Sending a mail[mailSubject={0}, mailBody=[{1}] to [{2}]",
                     mailSubject, mailBody, originalCommentEmail);
 
-            mailService.send(message);
+            //mailService.send(message);
+            EmailService.getInstance().sendMessage(null, originalCommentEmail, null, adminEmail, mailSubject, null, mailBody);
         } catch (final Exception e) {
             LOGGER.log(Level.ERROR, e.getMessage(), e);
 

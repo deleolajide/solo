@@ -45,16 +45,30 @@ import org.b3log.solo.service.*;
 import org.b3log.solo.util.Skins;
 import org.json.JSONObject;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletRequestEvent;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
+
+import java.util.Locale;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.Arrays;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.charset.Charset;
+
+import org.jivesoftware.util.*;
+import org.jivesoftware.openfire.*;
+
 
 /**
  * Solo Servlet listener.
@@ -109,11 +123,59 @@ public final class SoloServletListener extends AbstractServletListener {
     private Lock requestLock = new ReentrantLock();
 
     @Override
-    public void contextInitialized(final ServletContextEvent servletContextEvent) {
-        Latkes.setScanPath("org.b3log.solo"); // For Latke IoC        
-        super.contextInitialized(servletContextEvent);
-        Stopwatchs.start("Context Initialized");
+    public void contextInitialized(final ServletContextEvent servletContextEvent)
+    {
+        ServletContext servletContext = servletContextEvent.getServletContext();
+        final String realPath = servletContext.getRealPath("/");
 
+        try {
+            String root = realPath + File.separator + "/WEB-INF" + File.separator + "classes" + File.separator;
+            Path fileLocalProperties = Paths.get(root + "local.properties");
+            Path fileLatkeProperties = Paths.get(root + "latke.properties");
+
+            String username = JiveGlobals.getXMLProperty("database.defaultProvider.username");
+            String password = JiveGlobals.getXMLProperty("database.defaultProvider.password");
+            String driver = JiveGlobals.getXMLProperty("database.defaultProvider.driver");
+            String serverURL = JiveGlobals.getXMLProperty("database.defaultProvider.serverURL");
+
+            String blogName = JiveGlobals.getProperty("solo.blog.name", "solo");
+
+            List<String> lines = Arrays.asList("runtimeDatabase=H2", "jdbc.username=root", "jdbc.password=", "jdbc.driver=org.h2.Driver", "jdbc.URL=jdbc:h2:~/solo_h2/db", "jdbc.pool=h2", "jdbc.minConnCnt=5", "jdbc.maxConnCnt=10", "jdbc.transactionIsolation=REPEATABLE_READ", "jdbc.tablePrefix=" + blogName);
+
+            if (serverURL != null && username != null && password != null && driver != null)
+            {
+                LOGGER.info("database.defaultProvider " + username + " " + password + " " + driver + " " + serverURL);
+                lines = Arrays.asList("runtimeDatabase=MYSQL", "jdbc.username=" + username, "jdbc.password=" + password, "jdbc.driver=" + driver, "jdbc.URL=" + serverURL, "jdbc.pool=druid", "jdbc.minConnCnt=5", "jdbc.maxConnCnt=10", "jdbc.transactionIsolation=REPEATABLE_READ", "jdbc.tablePrefix=" + blogName);
+            }
+
+            Files.write(fileLocalProperties, lines, Charset.forName("UTF-8"));
+
+            String serverScheme = "http";
+            String serverHost = JiveGlobals.getProperty("xmpp.fqdn", XMPPServer.getInstance().getServerInfo().getHostname());
+            String serverPort = JiveGlobals.getProperty("solo.port.plain", JiveGlobals.getProperty("httpbind.port.plain", "7070"));
+
+            boolean secureBlog = JiveGlobals.getBooleanProperty("solo.blog.secure", true);
+
+            if (secureBlog)
+            {
+                serverScheme = "https";
+                serverPort = JiveGlobals.getProperty("solo.port.secure", JiveGlobals.getProperty("httpbind.port.secure", "7443"));
+            }
+
+            LOGGER.info("web server url " + serverScheme + "://" + serverHost + ":" + serverPort);
+
+            lines = Arrays.asList("serverScheme=" + serverScheme, "serverHost=" + serverHost, "serverPort=" + serverPort, "cookieName=solo", "cookieSecret=Beyond", "runtimeMode=DEVELOPMENT");
+            Files.write(fileLatkeProperties, lines, Charset.forName("UTF-8"));
+
+        } catch (Exception e) {
+            LOGGER.log(Level.ERROR, e.getMessage(), e);
+        }
+
+        Latkes.setScanPath("org.b3log.solo"); // For Latke IoC
+        super.contextInitialized(servletContextEvent);
+        Latkes.setLocale(Locale.ENGLISH);
+
+        Stopwatchs.start("Context Initialized");
         beanManager = Lifecycle.getBeanManager();
 
         // Upgrade check (https://github.com/b3log/solo/issues/12040)
@@ -269,9 +331,9 @@ public final class SoloServletListener extends AbstractServletListener {
             eventManager.registerListener(new ViewLoadEventHandler());
 
             // Sync
-            eventManager.registerListener(new ArticleSender());
-            eventManager.registerListener(new ArticleUpdater());
-            eventManager.registerListener(new CommentSender());
+            //eventManager.registerListener(new ArticleSender());
+            //eventManager.registerListener(new ArticleUpdater());
+            //eventManager.registerListener(new CommentSender());
         } catch (final Exception e) {
             LOGGER.log(Level.ERROR, "Register event processors error", e);
             throw new IllegalStateException(e);

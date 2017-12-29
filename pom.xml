@@ -75,7 +75,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
+        <openfire.version>4.2.0</openfire.version>
         <org.b3log.latke.version>2.3.17</org.b3log.latke.version>
 
         <servlet.version>3.1.0</servlet.version>
@@ -229,6 +229,13 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.igniterealtime.openfire</groupId>
+            <artifactId>xmppserver</artifactId>
+            <version>${openfire.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        
     </dependencies>
 
     <build>
@@ -438,9 +445,20 @@
             </activation>
             <repositories>
                 <repository>
+                    <id>igniterealtime</id>
+                    <name>Ignite Realtime Repository (Snapshots)</name>
+                    <url>http://igniterealtime.org/repo/</url>
+                    <releases>
+                        <enabled>false</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>   
+                <repository>
                     <id>aliyun</id>
                     <url>http://maven.aliyun.com/nexus/content/groups/public</url>
-                </repository>
+                </repository>                
             </repositories>
 
             <pluginRepositories>

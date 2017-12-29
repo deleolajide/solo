@@ -56,6 +56,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
+import org.jivesoftware.util.EmailService;
 
 /**
  * Provides patches on some special issues.
@@ -207,13 +208,16 @@ public class RepairProcessor {
                 return;
             }
 
+            final String adminEmail = preferenceQueryService.getPreference().getString(Option.ID_C_ADMIN_EMAIL);
             final Message msg = new MailService.Message();
             msg.setFrom(preference.getString(Option.ID_C_ADMIN_EMAIL));
             msg.addRecipient("DL88250@gmail.com");
             msg.setSubject("Restore signs");
             msg.setHtmlBody(originalSigns + "<p>Admin email: " + preference.getString(Option.ID_C_ADMIN_EMAIL) + "</p>");
 
-            MAIL_SVC.send(msg);
+            //MAIL_SVC.send(msg);
+            EmailService.getInstance().sendMessage(null, adminEmail, null, adminEmail, "Restore signs", null, originalSigns + "<p>Admin email: " + preference.getString(Option.ID_C_ADMIN_EMAIL) + "</p>");
+
         } catch (final Exception e) {
             LOGGER.log(Level.ERROR, e.getMessage(), e);
 

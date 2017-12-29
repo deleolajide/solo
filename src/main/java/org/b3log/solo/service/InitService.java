@@ -80,7 +80,7 @@ public class InitService {
     /**
      * Initialized time zone id.
      */
-    private static final String INIT_TIME_ZONE_ID = "Asia/Shanghai";
+    private static final String INIT_TIME_ZONE_ID = "Europe/London";
 
     /**
      * Option repository.
@@ -228,7 +228,7 @@ public class InitService {
                     initPreference(requestJSONObject);
                     initReplyNotificationTemplate();
                     initAdmin(requestJSONObject);
-                    initLink();
+                    //initLink();
                 }
 
                 transaction.commit();
@@ -253,7 +253,7 @@ public class InitService {
         final Transaction transaction = userRepository.beginTransaction();
 
         try {
-            helloWorld();
+            //helloWorld();
             transaction.commit();
         } catch (final Exception e) {
             if (transaction.isActive()) {
@@ -289,8 +289,8 @@ public class InitService {
 
         article.put(Article.ARTICLE_ABSTRACT, content);
         article.put(Article.ARTICLE_CONTENT, content);
-        article.put(Article.ARTICLE_TAGS_REF, "Solo");
-        article.put(Article.ARTICLE_PERMALINK, "/hello-solo");
+        article.put(Article.ARTICLE_TAGS_REF, "hello,world");
+        article.put(Article.ARTICLE_PERMALINK, "/hello-world");
         article.put(Article.ARTICLE_IS_PUBLISHED, true);
         article.put(Article.ARTICLE_HAD_BEEN_PUBLISHED, true);
         article.put(Article.ARTICLE_SIGN_ID, "1");
@@ -315,7 +315,7 @@ public class InitService {
         final JSONObject comment = new JSONObject();
 
         comment.put(Keys.OBJECT_ID, articleId);
-        comment.put(Comment.COMMENT_NAME, "Daniel");
+        comment.put(Comment.COMMENT_NAME, "admin");
         comment.put(Comment.COMMENT_EMAIL, "dl88250@gmail.com");
         comment.put(Comment.COMMENT_URL, "https://hacpai.com/member/88250");
         comment.put(Comment.COMMENT_CONTENT, langPropsService.get("helloWorld.comment.content"));
@@ -487,7 +487,7 @@ public class InitService {
         admin.put(User.USER_EMAIL, requestJSONObject.getString(User.USER_EMAIL));
         admin.put(User.USER_URL, Latkes.getServePath());
         admin.put(User.USER_ROLE, Role.ADMIN_ROLE);
-        admin.put(User.USER_PASSWORD, MD5.hash(requestJSONObject.getString(User.USER_PASSWORD)));
+        admin.put(User.USER_PASSWORD, requestJSONObject.getString(User.USER_PASSWORD));
         admin.put(UserExt.USER_ARTICLE_COUNT, 0);
         admin.put(UserExt.USER_PUBLISHED_ARTICLE_COUNT, 0);
         admin.put(UserExt.USER_AVATAR, Thumbnails.getGravatarURL(requestJSONObject.getString(User.USER_EMAIL), "128"));

@@ -16,8 +16,8 @@
 package org.b3log.solo.util;
 
 import org.apache.commons.lang.StringUtils;
-
 import java.util.ResourceBundle;
+import org.jivesoftware.util.*;
 
 /**
  * Mail utilities.
@@ -46,10 +46,14 @@ public final class Mails {
      */
     public static boolean isConfigured() {
         try {
+/*
             return StringUtils.isNotBlank(mailConf.getString("mail.user")) &&
                     StringUtils.isNotBlank(mailConf.getString("mail.password")) &&
                     StringUtils.isNotBlank(mailConf.getString("mail.smtp.host")) &&
                     StringUtils.isNotBlank(mailConf.getString("mail.smtp.port"));
+*/
+            return JiveGlobals.getProperty("mail.smtp.host", null) != null;
+
         } catch (final Exception e) {
             return false;
         }

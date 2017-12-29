@@ -53,6 +53,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Date;
+import org.jivesoftware.util.EmailService;
 
 /**
  * Comment management service.
@@ -254,7 +255,8 @@ public class CommentMgmtService {
         LOGGER.log(Level.DEBUG, "Sending a mail[mailSubject={0}, mailBody=[{1}] to admin[email={2}]",
                 mailSubject, mailBody, adminEmail);
 
-        mailService.send(message);
+        //mailService.send(message);
+        EmailService.getInstance().sendMessage(null, adminEmail, null, adminEmail, mailSubject, null, mailBody);
     }
 
     /**

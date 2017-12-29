@@ -20,6 +20,7 @@
                 <a href="#tools/preference/setting">${paramSettingsLabel}</a>
             </div>
         </li>
+<!-- BAO        
         <li>
             <div id="tabPreference_qiniu">
                 <a href="#toos/preference/qiniu">${qiniuLabel}</a>
@@ -30,6 +31,7 @@
                 <a href="#tools/preference/solo">B3log</a>
             </div>
         </li>
+-->        
     </ul>
 </div>
 <div id="tabPreferencePanel" class="sub-tabs-main">
@@ -385,7 +387,7 @@
             <tbody>
             <tr>
                 <th colspan="2">
-                    <a href="https://hacpai.com/article/1442418791213" target="_blank">${howConfigLabel}</a>
+                    ${howConfigLabel}
                     &nbsp;
                     <button onclick="admin.preference.updateQiniu()">${updateLabel}</button>
                 </th>

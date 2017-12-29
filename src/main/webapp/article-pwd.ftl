@@ -8,7 +8,7 @@ ${articleTitle}
     <div>${msg}</div>
     </#if>
 <form class="form" method="POST" action="${servePath}/console/article-pwd">
-    <label for="pwdTyped">访问密码：</label>
+    <label for="pwdTyped">Password：</label>
     <input type="password" id="pwdTyped" name="pwdTyped" />
     <input type="hidden" name="articleId" value="${articleId}" />
     <button id="confirm" type="submit">${confirmLabel}</button>

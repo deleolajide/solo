@@ -179,7 +179,7 @@ public class CategoryRepositoryImpl extends AbstractRepository implements Catego
         Collections.sort(tagJoList, new Comparator<JSONObject>() {
             @Override
             public int compare(final JSONObject o1, final JSONObject o2) {
-                return Collator.getInstance(java.util.Locale.CHINA).
+                return Collator.getInstance(java.util.Locale.US).
                         compare(o1.optString(Tag.TAG_TITLE), o2.optString(Tag.TAG_TITLE));
             }
         });

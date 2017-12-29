@@ -114,7 +114,7 @@ public class TagRepositoryImpl extends AbstractRepository implements TagReposito
             @Override
             public int compare(final JSONObject o1, final JSONObject o2) {
                 try {
-                    return Collator.getInstance(java.util.Locale.CHINA)
+                    return Collator.getInstance(java.util.Locale.US)
                             .compare(o1.getString(Tag.TAG_TITLE), o2.getString(Tag.TAG_TITLE));
                 } catch (final JSONException e) {
                     throw new RuntimeException(e);

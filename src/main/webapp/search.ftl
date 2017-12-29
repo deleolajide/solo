@@ -15,7 +15,7 @@
     <a href="${servePath}"><img class="fn-left" width="44" border="0" alt="Solo" title="Solo" src="${staticServePath}/images/logo.png"/></a>
     <div class="search__input fn-left">
         <input value="${keyword}" id="keyword" onkeypress="if(event.keyCode===13){document.getElementById('searchBtn').click()}">
-        <button id="searchBtn" onclick="window.location.href='${servePath}/search?keyword=' + document.getElementById('keyword').value">搜索</button>
+        <button id="searchBtn" onclick="window.location.href='${servePath}/search?keyword=' + document.getElementById('keyword').value">Search</button>
     </div>
     <span class="fn-right">
     <#if isLoggedIn>
@@ -83,13 +83,13 @@
         </#if>
     </nav>
 <#else>
-No Result, Return to <a href="${servePath}">Index</a> or <a href="https://hacpai.com">HacPai</a>.
+No Result, Return to <a href="${servePath}">Index</a>.
 </#if>
 </div>
 
 <div class="footerWrapper">
     <div class="footer">
-        Powered by <a href="http://b3log.org" target="_blank">B3log 开源</a> • Solo ${version}
+        Powered by <a href="http://b3log.org" target="_blank">B3log</a> • Solo ${version}
     </div>
 </div>
 </body>

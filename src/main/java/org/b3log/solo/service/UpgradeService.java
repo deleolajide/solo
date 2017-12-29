@@ -47,6 +47,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Statement;
 
+import org.jivesoftware.util.EmailService;
+
 /**
  * Upgrade service.
  *
@@ -338,7 +340,8 @@ public class UpgradeService {
         message.setSubject(langPropsService.get("skipVersionMailSubject"));
         message.setHtmlBody(langPropsService.get("skipVersionMailBody"));
 
-        MAIL_SVC.send(message);
+        //MAIL_SVC.send(message);
+        EmailService.getInstance().sendMessage(null, adminEmail, null, adminEmail, langPropsService.get("skipVersionMailSubject"), null, langPropsService.get("skipVersionMailBody"));
 
         LOGGER.info("Send an email to the user who upgrades Solo with a discontinuous version.");
     }
